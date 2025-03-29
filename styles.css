@@ -428,4 +428,324 @@ footer {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
+}
+
+/* Resume Template Styles */
+.resume {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Modern Template */
+.resume.modern {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.modern header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.resume.modern h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.resume.modern .contact-info {
+    color: #666;
+}
+
+.resume.modern section {
+    margin-bottom: 2rem;
+}
+
+.resume.modern h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Minimal Template */
+.resume.minimal {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.minimal header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.resume.minimal h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.resume.minimal .contact-info {
+    color: #666;
+}
+
+.resume.minimal .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+
+.resume.minimal .experience-item,
+.resume.minimal .education-item {
+    margin-bottom: 1.5rem;
+}
+
+.resume.minimal .experience-header,
+.resume.minimal .education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+/* Professional Template */
+.resume.professional {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.professional header {
+    background: var(--primary-color);
+    color: white;
+    padding: 2rem;
+    margin: -2rem -2rem 2rem;
+}
+
+.resume.professional .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.resume.professional h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.resume.professional .contact-info {
+    display: flex;
+    gap: 2rem;
+}
+
+.resume.professional .contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resume.professional section {
+    margin-bottom: 2rem;
+}
+
+.resume.professional h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Academic Template */
+.resume.academic {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.academic header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.resume.academic h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.resume.academic .contact-info {
+    color: #666;
+}
+
+.resume.academic section {
+    margin-bottom: 2rem;
+}
+
+.resume.academic h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Technical Template */
+.resume.technical {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.technical header {
+    background: var(--background-dark);
+    color: white;
+    padding: 2rem;
+    margin: -2rem -2rem 2rem;
+}
+
+.resume.technical .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.resume.technical h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.resume.technical .contact-info {
+    display: flex;
+    gap: 2rem;
+}
+
+.resume.technical .contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resume.technical .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.resume.technical .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+/* Executive Template */
+.resume.executive {
+    font-family: 'Inter', sans-serif;
+}
+
+.resume.executive header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 2rem;
+    margin: -2rem -2rem 2rem;
+}
+
+.resume.executive .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.resume.executive h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.resume.executive .contact-info {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.resume.executive section {
+    margin-bottom: 2rem;
+}
+
+.resume.executive h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.resume.executive .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.resume.executive .skill-item {
+    padding: 0.5rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Common Resume Styles */
+.resume .experience-item,
+.resume .education-item {
+    margin-bottom: 1.5rem;
+}
+
+.resume .experience-item h3,
+.resume .education-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.resume .company,
+.resume .institution {
+    color: #666;
+    font-weight: 500;
+}
+
+.resume .duration,
+.resume .year {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.resume .description {
+    margin-top: 0.5rem;
+    line-height: 1.6;
+}
+
+.resume .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.resume .skill-tag {
+    background: #f5f5f5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+/* Responsive Resume Styles */
+@media (max-width: 768px) {
+    .resume {
+        padding: 1rem;
+    }
+
+    .resume.minimal .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resume.professional .contact-info,
+    .resume.technical .contact-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .resume.technical .skills-grid,
+    .resume.executive .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 } 
