@@ -16,6 +16,28 @@ const addExperienceBtn = document.getElementById('add-experience');
 const addEducationBtn = document.getElementById('add-education');
 const experienceContainer = document.getElementById('experience-container');
 const educationContainer = document.getElementById('education-container');
+const getStartedBtn = document.querySelector('.cta-button');
+
+// Smooth scroll functionality
+function smoothScroll(target) {
+    const element = document.querySelector(target);
+    if (element) {
+        const headerOffset = 70; // Height of the fixed header
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Get Started button click handler
+getStartedBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    smoothScroll('#templates');
+});
 
 // Initialize docx library
 async function initializeDocx() {

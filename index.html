@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Resume Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.js"></script>
@@ -14,11 +17,14 @@
 <body>
     <header>
         <nav>
-            <div class="logo">Resume Builder</div>
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                Resume Builder
+            </div>
             <div class="nav-links">
-                <a href="#templates">Templates</a>
-                <a href="#builder">Builder</a>
-                <a href="#preview">Preview</a>
+                <a href="#templates"><i class="fas fa-paint-brush"></i> Templates</a>
+                <a href="#builder"><i class="fas fa-edit"></i> Builder</a>
+                <a href="#preview"><i class="fas fa-eye"></i> Preview</a>
             </div>
         </nav>
     </header>
@@ -27,24 +33,45 @@
         <section id="hero">
             <h1>Create Your Professional Resume</h1>
             <p>Choose from our collection of professional templates and build your perfect resume in minutes</p>
-            <a href="#templates" class="cta-button">Get Started</a>
+            <a href="#templates" class="cta-button">
+                <i class="fas fa-arrow-right"></i>
+                <span>Get Started</span>
+            </a>
         </section>
 
         <section id="templates">
             <h2>Choose Your Template</h2>
             <div class="template-grid">
                 <div class="template-card" data-template="modern">
-                    <img src="templates/modern.png" alt="Modern Template">
+                    <div class="template-preview">
+                        <img src="templates/modern.png" alt="Modern Template">
+                        <div class="template-overlay">
+                            <button class="preview-btn">Preview</button>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
                     <h3>Modern</h3>
                     <p>Clean and professional design</p>
                 </div>
                 <div class="template-card" data-template="classic">
-                    <img src="templates/classic.png" alt="Classic Template">
+                    <div class="template-preview">
+                        <img src="templates/classic.png" alt="Classic Template">
+                        <div class="template-overlay">
+                            <button class="preview-btn">Preview</button>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
                     <h3>Classic</h3>
                     <p>Traditional and formal layout</p>
                 </div>
                 <div class="template-card" data-template="creative">
-                    <img src="templates/creative.png" alt="Creative Template">
+                    <div class="template-preview">
+                        <img src="templates/creative.png" alt="Creative Template">
+                        <div class="template-overlay">
+                            <button class="preview-btn">Preview</button>
+                            <button class="select-btn">Select</button>
+                        </div>
+                    </div>
                     <h3>Creative</h3>
                     <p>Stand out with unique design</p>
                 </div>
@@ -55,81 +82,85 @@
             <h2>Build Your Resume</h2>
             <form id="resume-form">
                 <div class="form-section">
-                    <h3>Personal Information</h3>
+                    <h3><i class="fas fa-user"></i> Personal Information</h3>
                     <div class="form-group">
                         <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" required>
+                        <input type="text" id="fullName" required placeholder="Enter your full name">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" required placeholder="Enter your email">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" id="phone" required>
+                        <input type="tel" id="phone" required placeholder="Enter your phone number">
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
-                        <input type="text" id="location" required>
+                        <input type="text" id="location" required placeholder="Enter your location">
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3>Professional Summary</h3>
+                    <h3><i class="fas fa-file-alt"></i> Professional Summary</h3>
                     <div class="form-group">
                         <label for="summary">Summary</label>
-                        <textarea id="summary" rows="4" required></textarea>
+                        <textarea id="summary" rows="4" required placeholder="Write a brief summary of your professional background"></textarea>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3>Work Experience</h3>
+                    <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
                     <div id="experience-container">
                         <div class="experience-entry">
                             <div class="form-group">
                                 <label>Company Name</label>
-                                <input type="text" class="company-name" required>
+                                <input type="text" class="company-name" required placeholder="Enter company name">
                             </div>
                             <div class="form-group">
                                 <label>Position</label>
-                                <input type="text" class="position" required>
+                                <input type="text" class="position" required placeholder="Enter your position">
                             </div>
                             <div class="form-group">
                                 <label>Duration</label>
-                                <input type="text" class="duration" required>
+                                <input type="text" class="duration" required placeholder="e.g., Jan 2020 - Present">
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="description" rows="3" required></textarea>
+                                <textarea class="description" rows="3" required placeholder="Describe your responsibilities and achievements"></textarea>
                             </div>
                         </div>
                     </div>
-                    <button type="button" id="add-experience" class="secondary-button">Add Experience</button>
+                    <button type="button" id="add-experience" class="secondary-button">
+                        <i class="fas fa-plus"></i> Add Experience
+                    </button>
                 </div>
 
                 <div class="form-section">
-                    <h3>Education</h3>
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
                     <div id="education-container">
                         <div class="education-entry">
                             <div class="form-group">
                                 <label>Institution</label>
-                                <input type="text" class="institution" required>
+                                <input type="text" class="institution" required placeholder="Enter institution name">
                             </div>
                             <div class="form-group">
                                 <label>Degree</label>
-                                <input type="text" class="degree" required>
+                                <input type="text" class="degree" required placeholder="Enter your degree">
                             </div>
                             <div class="form-group">
                                 <label>Year</label>
-                                <input type="text" class="year" required>
+                                <input type="text" class="year" required placeholder="e.g., 2015 - 2019">
                             </div>
                         </div>
                     </div>
-                    <button type="button" id="add-education" class="secondary-button">Add Education</button>
+                    <button type="button" id="add-education" class="secondary-button">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
                 </div>
 
                 <div class="form-section">
-                    <h3>Skills</h3>
+                    <h3><i class="fas fa-tools"></i> Skills</h3>
                     <div class="form-group">
                         <label for="skills">Skills (comma-separated)</label>
                         <input type="text" id="skills" placeholder="e.g., JavaScript, Python, Project Management" required>
@@ -137,8 +168,12 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" id="preview-btn" class="secondary-button">Preview Resume</button>
-                    <button type="submit" class="primary-button">Generate Resume</button>
+                    <button type="button" id="preview-btn" class="secondary-button">
+                        <i class="fas fa-eye"></i> Preview Resume
+                    </button>
+                    <button type="submit" class="primary-button">
+                        <i class="fas fa-download"></i> Generate Resume
+                    </button>
                 </div>
             </form>
         </section>
@@ -147,8 +182,12 @@
             <h2>Preview Your Resume</h2>
             <div id="resume-preview"></div>
             <div class="preview-actions">
-                <button id="edit-btn" class="secondary-button">Edit</button>
-                <button id="download-docx" class="primary-button">Download as Word</button>
+                <button id="edit-btn" class="secondary-button">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button id="download-docx" class="primary-button">
+                    <i class="fas fa-file-word"></i> Download as Word
+                </button>
             </div>
         </section>
     </main>
