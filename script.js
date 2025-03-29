@@ -3,6 +3,30 @@ let selectedTemplate = 'modern';
 let resumeData = {};
 let docxLibrary = null;
 
+// Theme switcher
+const themeSwitcher = document.getElementById('theme-switcher');
+const themeIcon = themeSwitcher.querySelector('i');
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeIcon(savedTheme);
+
+// Theme switcher click handler
+themeSwitcher.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+});
+
+// Update theme icon
+function updateThemeIcon(theme) {
+    themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+}
+
 // DOM Elements
 const templateCards = document.querySelectorAll('.template-card');
 const resumeForm = document.getElementById('resume-form');

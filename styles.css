@@ -6,6 +6,7 @@
 }
 
 :root {
+    /* Dark mode variables */
     --primary-color: #6366f1;
     --primary-dark: #4f46e5;
     --secondary-color: #8b5cf6;
@@ -17,6 +18,22 @@
     --card-bg: #1e293b;
     --input-bg: #1e293b;
     --input-border: #334155;
+    --hover-color: #3b82f6;
+}
+
+/* Light mode variables */
+[data-theme="light"] {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --background-dark: #f8fafc;
+    --background-light: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #e2e8f0;
     --hover-color: #3b82f6;
 }
 
@@ -748,4 +765,73 @@ footer {
     .resume.executive .skills-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
+}
+
+/* Theme switcher button */
+.theme-switcher {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--primary-color);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: none;
+}
+
+.theme-switcher:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switcher i {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-switcher:hover i {
+    transform: rotate(180deg);
+}
+
+/* Resume styles for light mode */
+[data-theme="light"] .resume {
+    background: white;
+    color: #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .resume.modern h1,
+[data-theme="light"] .resume.modern h2,
+[data-theme="light"] .resume.academic h2,
+[data-theme="light"] .resume.technical h2,
+[data-theme="light"] .resume.executive h2 {
+    color: var(--primary-color);
+}
+
+[data-theme="light"] .resume .contact-info {
+    color: #666;
+}
+
+[data-theme="light"] .resume .company,
+[data-theme="light"] .resume .institution {
+    color: #666;
+}
+
+[data-theme="light"] .resume .duration,
+[data-theme="light"] .resume .year {
+    color: #888;
+}
+
+[data-theme="light"] .resume .skill-tag,
+[data-theme="light"] .resume .skill-item {
+    background: #f5f5f5;
+    color: #333;
 } 
