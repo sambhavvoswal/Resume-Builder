@@ -627,7 +627,7 @@ async function generateWordDocument(data) {
             docxLibrary = await waitForDocx();
         }
 
-        const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, PageOrientation } = docxLibrary;
+        const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, PageOrientation, Table, TableRow, TableCell, WidthType } = docxLibrary;
         
         // Create a new document
         const doc = new Document({
@@ -647,61 +647,132 @@ async function generateWordDocument(data) {
                     }
                 },
                 children: [
-                    // Header
-                    new Paragraph({
-                        text: data.personalInfo.fullName,
-                        heading: HeadingLevel.HEADING_1,
-                        alignment: AlignmentType.CENTER,
-                        spacing: {
-                            after: 200,
-                            line: 360,
-                        },
-                    }),
-                    new Paragraph({
-                        children: [
-                            new TextRun({
-                                text: `${data.personalInfo.email} | ${data.personalInfo.phone}`,
-                                size: 24,
-                            }),
-                            new TextRun({
-                                text: " | ",
-                                size: 24,
-                            }),
-                            new TextRun({
-                                text: data.personalInfo.location,
-                                size: 24,
-                            }),
-                        ],
-                        alignment: AlignmentType.CENTER,
-                        spacing: {
-                            after: 400,
-                        },
-                    }),
+                    // Header based on template
+                    ...(selectedTemplate === 'professional' || selectedTemplate === 'technical' ? [
+                        new Paragraph({
+                            text: data.personalInfo.fullName,
+                            heading: HeadingLevel.HEADING_1,
+                            alignment: AlignmentType.CENTER,
+                            spacing: {
+                                after: 200,
+                                line: 360,
+                            },
+                            style: {
+                                color: 'FFFFFF',
+                                background: selectedTemplate === 'professional' ? '6366F1' : '0F172A'
+                            }
+                        }),
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: `${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}`,
+                                    size: 24,
+                                    color: 'FFFFFF'
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER,
+                            spacing: {
+                                after: 400,
+                            }
+                        })
+                    ] : [
+                        new Paragraph({
+                            text: data.personalInfo.fullName,
+                            heading: HeadingLevel.HEADING_1,
+                            alignment: AlignmentType.CENTER,
+                            spacing: {
+                                after: 200,
+                                line: 360,
+                            }
+                        }),
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: `${data.personalInfo.email} | ${data.personalInfo.phone}`,
+                                    size: 24,
+                                }),
+                                new TextRun({
+                                    text: " | ",
+                                    size: 24,
+                                }),
+                                new TextRun({
+                                    text: data.personalInfo.location,
+                                    size: 24,
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER,
+                            spacing: {
+                                after: 400,
+                            }
+                        })
+                    ]),
 
-                    // Professional Summary
+                    // Summary section with template-specific title
                     new Paragraph({
-                        text: "Professional Summary",
+                        text: selectedTemplate === 'academic' ? 'Research Summary' : 
+                              selectedTemplate === 'technical' ? 'Technical Summary' :
+                              selectedTemplate === 'executive' ? 'Executive Summary' :
+                              selectedTemplate === 'minimal' ? 'About' : 'Professional Summary',
                         heading: HeadingLevel.HEADING_2,
                         spacing: {
                             before: 400,
                             after: 200,
-                        },
+                        }
                     }),
                     new Paragraph({
                         text: data.summary,
                         spacing: {
                             after: 400,
-                        },
+                        }
                     }),
+
+                    // Skills section (moved up for technical template)
+                    ...(selectedTemplate === 'technical' ? [
+                        new Paragraph({
+                            text: 'Technical Skills',
+                            heading: HeadingLevel.HEADING_2,
+                            spacing: {
+                                before: 400,
+                                after: 200,
+                            }
+                        }),
+                        new Table({
+                            width: {
+                                size: 100,
+                                type: WidthType.PERCENTAGE
+                            },
+                            rows: [
+                                new TableRow({
+                                    children: data.skills.map(skill => 
+                                        new TableCell({
+                                            children: [
+                                                new Paragraph({
+                                                    children: [
+                                                        new TextRun({
+                                                            text: '• ',
+                                                            bold: true
+                                                        }),
+                                                        new TextRun({
+                                                            text: skill
+                                                        })
+                                                    ]
+                                                })
+                                            ]
+                                        })
+                                    )
+                                })
+                            ]
+                        })
+                    ] : []),
 
                     // Work Experience
                     new Paragraph({
-                        text: "Work Experience",
+                        text: selectedTemplate === 'academic' ? 'Research Experience' : 'Work Experience',
                         heading: HeadingLevel.HEADING_2,
                         spacing: {
                             before: 400,
                             after: 200,
-                        },
+                        }
                     }),
                     ...data.experience.map(exp => [
                         new Paragraph({
@@ -715,7 +786,7 @@ async function generateWordDocument(data) {
                             spacing: {
                                 before: 200,
                                 after: 100,
-                            },
+                            }
                         }),
                         new Paragraph({
                             children: [
@@ -731,18 +802,18 @@ async function generateWordDocument(data) {
                                 new TextRun({
                                     text: exp.duration,
                                     size: 24,
-                                }),
+                                })
                             ],
                             spacing: {
                                 after: 100,
-                            },
+                            }
                         }),
                         new Paragraph({
                             text: exp.description,
                             spacing: {
                                 after: 200,
-                            },
-                        }),
+                            }
+                        })
                     ]).flat(),
 
                     // Education
@@ -752,7 +823,7 @@ async function generateWordDocument(data) {
                         spacing: {
                             before: 400,
                             after: 200,
-                        },
+                        }
                     }),
                     ...data.education.map(edu => [
                         new Paragraph({
@@ -761,12 +832,12 @@ async function generateWordDocument(data) {
                                     text: edu.degree,
                                     bold: true,
                                     size: 28,
-                                }),
+                                })
                             ],
                             spacing: {
                                 before: 200,
                                 after: 100,
-                            },
+                            }
                         }),
                         new Paragraph({
                             children: [
@@ -782,31 +853,54 @@ async function generateWordDocument(data) {
                                 new TextRun({
                                     text: edu.year,
                                     size: 24,
-                                }),
+                                })
                             ],
                             spacing: {
                                 after: 200,
-                            },
-                        }),
+                            }
+                        })
                     ]).flat(),
 
-                    // Skills
-                    new Paragraph({
-                        text: "Skills",
-                        heading: HeadingLevel.HEADING_2,
-                        spacing: {
-                            before: 400,
-                            after: 200,
-                        },
-                    }),
-                    new Paragraph({
-                        text: data.skills.join(", "),
-                        spacing: {
-                            after: 400,
-                        },
-                    }),
-                ],
-            }],
+                    // Skills section (for non-technical templates)
+                    ...(selectedTemplate !== 'technical' ? [
+                        new Paragraph({
+                            text: selectedTemplate === 'executive' ? 'Core Competencies' : 'Skills',
+                            heading: HeadingLevel.HEADING_2,
+                            spacing: {
+                                before: 400,
+                                after: 200,
+                            }
+                        }),
+                        new Table({
+                            width: {
+                                size: 100,
+                                type: WidthType.PERCENTAGE
+                            },
+                            rows: [
+                                new TableRow({
+                                    children: data.skills.map(skill => 
+                                        new TableCell({
+                                            children: [
+                                                new Paragraph({
+                                                    children: [
+                                                        new TextRun({
+                                                            text: '• ',
+                                                            bold: true
+                                                        }),
+                                                        new TextRun({
+                                                            text: skill
+                                                        })
+                                                    ]
+                                                })
+                                            ]
+                                        })
+                                    )
+                                })
+                            ]
+                        })
+                    ] : [])
+                ]
+            }]
         });
 
         // Generate the document
