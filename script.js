@@ -278,57 +278,7 @@ function getTemplate(templateName) {
                 </section>
             </div>
         `,
-        minimal: (data) => `
-            <div class="resume minimal">
-                <header>
-                    <h1>${data.personalInfo.fullName}</h1>
-                    <div class="contact-info">
-                        <p>${data.personalInfo.email} • ${data.personalInfo.phone} • ${data.personalInfo.location}</p>
-                    </div>
-                </header>
-                
-                <div class="content-grid">
-                    <section class="summary">
-                        <h2>About</h2>
-                        <p>${data.summary}</p>
-                    </section>
-
-                    <section class="experience">
-                        <h2>Experience</h2>
-                        ${data.experience.map(exp => `
-                            <div class="experience-item">
-                                <div class="experience-header">
-                                    <h3>${exp.position}</h3>
-                                    <span class="duration">${exp.duration}</span>
-                                </div>
-                                <p class="company">${exp.company}</p>
-                                <p class="description">${exp.description}</p>
-                            </div>
-                        `).join('')}
-                    </section>
-
-                    <section class="education">
-                        <h2>Education</h2>
-                        ${data.education.map(edu => `
-                            <div class="education-item">
-                                <div class="education-header">
-                                    <h3>${edu.degree}</h3>
-                                    <span class="year">${edu.year}</span>
-                                </div>
-                                <p class="institution">${edu.institution}</p>
-                            </div>
-                        `).join('')}
-                    </section>
-
-                    <section class="skills">
-                        <h2>Skills</h2>
-                        <div class="skills-list">
-                            ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
-                        </div>
-                    </section>
-                </div>
-            </div>
-        `,
+        
         professional: (data) => `
             <div class="resume professional">
                 <header>
@@ -384,92 +334,31 @@ function getTemplate(templateName) {
                 </div>
             </div>
         `,
-        academic: (data) => `
-            <div class="resume academic">
+        
+        minimal: (data) => `
+            <div class="resume minimal">
                 <header>
                     <h1>${data.personalInfo.fullName}</h1>
                     <div class="contact-info">
-                        <p>${data.personalInfo.email} | ${data.personalInfo.phone}</p>
-                        <p>${data.personalInfo.location}</p>
+                        <p>${data.personalInfo.email} • ${data.personalInfo.phone} • ${data.personalInfo.location}</p>
                     </div>
                 </header>
                 
-                <section class="summary">
-                    <h2>Research Summary</h2>
-                    <p>${data.summary}</p>
-                </section>
-
-                <section class="education">
-                    <h2>Education</h2>
-                    ${data.education.map(edu => `
-                        <div class="education-item">
-                            <h3>${edu.degree}</h3>
-                            <p class="institution">${edu.institution}</p>
-                            <p class="year">${edu.year}</p>
-                        </div>
-                    `).join('')}
-                </section>
-
-                <section class="experience">
-                    <h2>Research Experience</h2>
-                    ${data.experience.map(exp => `
-                        <div class="experience-item">
-                            <h3>${exp.position}</h3>
-                            <p class="company">${exp.company}</p>
-                            <p class="duration">${exp.duration}</p>
-                            <p class="description">${exp.description}</p>
-                        </div>
-                    `).join('')}
-                </section>
-
-                <section class="skills">
-                    <h2>Research Skills</h2>
-                    <div class="skills-list">
-                        ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
-                    </div>
-                </section>
-            </div>
-        `,
-        technical: (data) => `
-            <div class="resume technical">
-                <header>
-                    <div class="header-content">
-                        <h1>${data.personalInfo.fullName}</h1>
-                        <div class="contact-info">
-                            <p><i class="fas fa-envelope"></i> ${data.personalInfo.email}</p>
-                            <p><i class="fas fa-phone"></i> ${data.personalInfo.phone}</p>
-                            <p><i class="fas fa-map-marker-alt"></i> ${data.personalInfo.location}</p>
-                        </div>
-                    </div>
-                </header>
-                
-                <div class="content-wrapper">
+                <div class="content-grid">
                     <section class="summary">
-                        <h2>Technical Summary</h2>
+                        <h2>About</h2>
                         <p>${data.summary}</p>
                     </section>
 
-                    <section class="skills">
-                        <h2>Technical Skills</h2>
-                        <div class="skills-grid">
-                            ${data.skills.map(skill => `
-                                <div class="skill-item">
-                                    <i class="fas fa-code"></i>
-                                    <span>${skill}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </section>
-
                     <section class="experience">
-                        <h2>Professional Experience</h2>
+                        <h2>Experience</h2>
                         ${data.experience.map(exp => `
                             <div class="experience-item">
                                 <div class="experience-header">
                                     <h3>${exp.position}</h3>
-                                    <span class="company">${exp.company}</span>
+                                    <span class="duration">${exp.duration}</span>
                                 </div>
-                                <span class="duration">${exp.duration}</span>
+                                <p class="company">${exp.company}</p>
                                 <p class="description">${exp.description}</p>
                             </div>
                         `).join('')}
@@ -481,75 +370,25 @@ function getTemplate(templateName) {
                             <div class="education-item">
                                 <div class="education-header">
                                     <h3>${edu.degree}</h3>
-                                    <span class="institution">${edu.institution}</span>
+                                    <span class="year">${edu.year}</span>
                                 </div>
-                                <span class="year">${edu.year}</span>
-                            </div>
-                        `).join('')}
-                    </section>
-                </div>
-            </div>
-        `,
-        executive: (data) => `
-            <div class="resume executive">
-                <header>
-                    <div class="header-content">
-                        <h1>${data.personalInfo.fullName}</h1>
-                        <div class="contact-info">
-                            <p>${data.personalInfo.email} | ${data.personalInfo.phone}</p>
-                            <p>${data.personalInfo.location}</p>
-                        </div>
-                    </div>
-                </header>
-                
-                <div class="content-wrapper">
-                    <section class="summary">
-                        <h2>Executive Summary</h2>
-                        <p>${data.summary}</p>
-                    </section>
-
-                    <section class="experience">
-                        <h2>Professional Experience</h2>
-                        ${data.experience.map(exp => `
-                            <div class="experience-item">
-                                <div class="experience-header">
-                                    <h3>${exp.position}</h3>
-                                    <span class="company">${exp.company}</span>
-                                </div>
-                                <span class="duration">${exp.duration}</span>
-                                <p class="description">${exp.description}</p>
-                            </div>
-                        `).join('')}
-                    </section>
-
-                    <section class="education">
-                        <h2>Education</h2>
-                        ${data.education.map(edu => `
-                            <div class="education-item">
-                                <div class="education-header">
-                                    <h3>${edu.degree}</h3>
-                                    <span class="institution">${edu.institution}</span>
-                                </div>
-                                <span class="year">${edu.year}</span>
+                                <p class="institution">${edu.institution}</p>
                             </div>
                         `).join('')}
                     </section>
 
                     <section class="skills">
-                        <h2>Core Competencies</h2>
-                        <div class="skills-grid">
-                            ${data.skills.map(skill => `
-                                <div class="skill-item">
-                                    <span>${skill}</span>
-                                </div>
-                            `).join('')}
+                        <h2>Skills</h2>
+                        <div class="skills-list">
+                            ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                         </div>
                     </section>
                 </div>
             </div>
         `
     };
-    return templates[templateName];
+    
+    return templates[templateName] || templates.modern; // Default to modern if template not found
 }
 
 // Preview button click handler
@@ -620,159 +459,156 @@ downloadDocxBtn.addEventListener('click', async () => {
     }
 });
 
-// Generate Word document
+// Add this after the TEMPLATES object in script.js
+const WORD_TEMPLATES = {
+    modern: {
+        fontFamily: "Calibri",
+        colors: {
+            primary: "2E74B5",
+            secondary: "404040"
+        },
+        fontSize: {
+            name: 32,
+            contact: 24,
+            sectionHeader: 28,
+            content: 24
+        },
+        spacing: {
+            sectionBefore: 400,
+            sectionAfter: 200
+        }
+    },
+    professional: {
+        fontFamily: "Arial",
+        colors: {
+            primary: "2E74B5",
+            secondary: "000000"
+        },
+        fontSize: {
+            name: 36,
+            contact: 24,
+            sectionHeader: 28,
+            content: 24
+        },
+        spacing: {
+            sectionBefore: 400,
+            sectionAfter: 200
+        }
+    },
+    minimal: {
+        fontFamily: "Helvetica",
+        colors: {
+            primary: "333333",
+            secondary: "666666"
+        },
+        fontSize: {
+            name: 32,
+            contact: 20,
+            sectionHeader: 26,
+            content: 22
+        },
+        spacing: {
+            sectionBefore: 300,
+            sectionAfter: 150
+        }
+    }
+};
+
+// Update the generateWordDocument function
 async function generateWordDocument(data) {
     try {
         if (!docxLibrary) {
             docxLibrary = await waitForDocx();
         }
 
-        const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, PageOrientation, Table, TableRow, TableCell, WidthType } = docxLibrary;
-        
-        // Create a new document
+        const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } = docxLibrary;
+        const template = WORD_TEMPLATES[selectedTemplate] || WORD_TEMPLATES.modern;
+
         const doc = new Document({
             sections: [{
                 properties: {
                     page: {
                         margin: {
-                            top: 1440, // 1 inch
-                            right: 1440,
-                            bottom: 1440,
-                            left: 1440,
-                            header: 720,
-                            footer: 720,
-                            gutter: 0
+                            top: 1000,
+                            right: 1000,
+                            bottom: 1000,
+                            left: 1000,
                         },
-                        orientation: PageOrientation.PORTRAIT
-                    }
+                    },
                 },
                 children: [
-                    // Header based on template
-                    ...(selectedTemplate === 'professional' || selectedTemplate === 'technical' ? [
-                        new Paragraph({
-                            text: data.personalInfo.fullName,
-                            heading: HeadingLevel.HEADING_1,
-                            alignment: AlignmentType.CENTER,
-                            spacing: {
-                                after: 200,
-                                line: 360,
-                            },
-                            style: {
-                                color: 'FFFFFF',
-                                background: selectedTemplate === 'professional' ? '6366F1' : '0F172A'
-                            }
-                        }),
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: `${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}`,
-                                    size: 24,
-                                    color: 'FFFFFF'
-                                })
-                            ],
-                            alignment: AlignmentType.CENTER,
-                            spacing: {
-                                after: 400,
-                            }
-                        })
-                    ] : [
-                        new Paragraph({
-                            text: data.personalInfo.fullName,
-                            heading: HeadingLevel.HEADING_1,
-                            alignment: AlignmentType.CENTER,
-                            spacing: {
-                                after: 200,
-                                line: 360,
-                            }
-                        }),
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: `${data.personalInfo.email} | ${data.personalInfo.phone}`,
-                                    size: 24,
-                                }),
-                                new TextRun({
-                                    text: " | ",
-                                    size: 24,
-                                }),
-                                new TextRun({
-                                    text: data.personalInfo.location,
-                                    size: 24,
-                                })
-                            ],
-                            alignment: AlignmentType.CENTER,
-                            spacing: {
-                                after: 400,
-                            }
-                        })
-                    ]),
-
-                    // Summary section with template-specific title
+                    // Header with name and contact
                     new Paragraph({
-                        text: selectedTemplate === 'academic' ? 'Research Summary' : 
-                              selectedTemplate === 'technical' ? 'Technical Summary' :
-                              selectedTemplate === 'executive' ? 'Executive Summary' :
-                              selectedTemplate === 'minimal' ? 'About' : 'Professional Summary',
-                        heading: HeadingLevel.HEADING_2,
+                        alignment: AlignmentType.CENTER,
                         spacing: {
-                            before: 400,
                             after: 200,
-                        }
+                        },
+                        children: [
+                            new TextRun({
+                                text: data.personalInfo.fullName,
+                                bold: true,
+                                size: template.fontSize.name,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
                     }),
                     new Paragraph({
-                        text: data.summary,
+                        alignment: AlignmentType.CENTER,
                         spacing: {
                             after: 400,
-                        }
+                        },
+                        children: [
+                            new TextRun({
+                                text: `${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}`,
+                                size: template.fontSize.contact,
+                                font: template.fontFamily,
+                                color: template.colors.secondary,
+                            }),
+                        ],
                     }),
 
-                    // Skills section (moved up for technical template)
-                    ...(selectedTemplate === 'technical' ? [
-                        new Paragraph({
-                            text: 'Technical Skills',
-                            heading: HeadingLevel.HEADING_2,
-                            spacing: {
-                                before: 400,
-                                after: 200,
-                            }
-                        }),
-                        new Table({
-                            width: {
-                                size: 100,
-                                type: WidthType.PERCENTAGE
-                            },
-                            rows: [
-                                new TableRow({
-                                    children: data.skills.map(skill => 
-                                        new TableCell({
-                                            children: [
-                                                new Paragraph({
-                                                    children: [
-                                                        new TextRun({
-                                                            text: '• ',
-                                                            bold: true
-                                                        }),
-                                                        new TextRun({
-                                                            text: skill
-                                                        })
-                                                    ]
-                                                })
-                                            ]
-                                        })
-                                    )
-                                })
-                            ]
-                        })
-                    ] : []),
-
-                    // Work Experience
+                    // Professional Summary
                     new Paragraph({
-                        text: selectedTemplate === 'academic' ? 'Research Experience' : 'Work Experience',
-                        heading: HeadingLevel.HEADING_2,
                         spacing: {
-                            before: 400,
-                            after: 200,
-                        }
+                            before: template.spacing.sectionBefore,
+                            after: template.spacing.sectionAfter,
+                        },
+                        children: [
+                            new TextRun({
+                                text: "PROFESSIONAL SUMMARY",
+                                bold: true,
+                                size: template.fontSize.sectionHeader,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: data.summary,
+                                size: template.fontSize.content,
+                                font: template.fontFamily,
+                            }),
+                        ],
+                    }),
+
+                    // Experience Section
+                    new Paragraph({
+                        spacing: {
+                            before: template.spacing.sectionBefore,
+                            after: template.spacing.sectionAfter,
+                        },
+                        children: [
+                            new TextRun({
+                                text: "EXPERIENCE",
+                                bold: true,
+                                size: template.fontSize.sectionHeader,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
                     }),
                     ...data.experience.map(exp => [
                         new Paragraph({
@@ -780,50 +616,50 @@ async function generateWordDocument(data) {
                                 new TextRun({
                                     text: exp.position,
                                     bold: true,
-                                    size: 28,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
                                 }),
                             ],
-                            spacing: {
-                                before: 200,
-                                after: 100,
-                            }
                         }),
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: exp.company,
-                                    bold: true,
-                                    size: 24,
+                                    text: `${exp.company} | ${exp.duration}`,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                    color: template.colors.secondary,
                                 }),
-                                new TextRun({
-                                    text: " | ",
-                                    size: 24,
-                                }),
-                                new TextRun({
-                                    text: exp.duration,
-                                    size: 24,
-                                })
                             ],
-                            spacing: {
-                                after: 100,
-                            }
                         }),
                         new Paragraph({
-                            text: exp.description,
+                            children: [
+                                new TextRun({
+                                    text: exp.description,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                }),
+                            ],
                             spacing: {
                                 after: 200,
-                            }
-                        })
+                            },
+                        }),
                     ]).flat(),
 
-                    // Education
+                    // Education Section
                     new Paragraph({
-                        text: "Education",
-                        heading: HeadingLevel.HEADING_2,
                         spacing: {
-                            before: 400,
-                            after: 200,
-                        }
+                            before: template.spacing.sectionBefore,
+                            after: template.spacing.sectionAfter,
+                        },
+                        children: [
+                            new TextRun({
+                                text: "EDUCATION",
+                                bold: true,
+                                size: template.fontSize.sectionHeader,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
                     }),
                     ...data.education.map(edu => [
                         new Paragraph({
@@ -831,81 +667,56 @@ async function generateWordDocument(data) {
                                 new TextRun({
                                     text: edu.degree,
                                     bold: true,
-                                    size: 28,
-                                })
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                }),
                             ],
-                            spacing: {
-                                before: 200,
-                                after: 100,
-                            }
                         }),
                         new Paragraph({
                             children: [
                                 new TextRun({
-                                    text: edu.institution,
-                                    bold: true,
-                                    size: 24,
+                                    text: `${edu.institution} | ${edu.year}`,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                    color: template.colors.secondary,
                                 }),
-                                new TextRun({
-                                    text: " | ",
-                                    size: 24,
-                                }),
-                                new TextRun({
-                                    text: edu.year,
-                                    size: 24,
-                                })
                             ],
                             spacing: {
                                 after: 200,
-                            }
-                        })
+                            },
+                        }),
                     ]).flat(),
 
-                    // Skills section (for non-technical templates)
-                    ...(selectedTemplate !== 'technical' ? [
-                        new Paragraph({
-                            text: selectedTemplate === 'executive' ? 'Core Competencies' : 'Skills',
-                            heading: HeadingLevel.HEADING_2,
-                            spacing: {
-                                before: 400,
-                                after: 200,
-                            }
-                        }),
-                        new Table({
-                            width: {
-                                size: 100,
-                                type: WidthType.PERCENTAGE
-                            },
-                            rows: [
-                                new TableRow({
-                                    children: data.skills.map(skill => 
-                                        new TableCell({
-                                            children: [
-                                                new Paragraph({
-                                                    children: [
-                                                        new TextRun({
-                                                            text: '• ',
-                                                            bold: true
-                                                        }),
-                                                        new TextRun({
-                                                            text: skill
-                                                        })
-                                                    ]
-                                                })
-                                            ]
-                                        })
-                                    )
-                                })
-                            ]
-                        })
-                    ] : [])
-                ]
-            }]
+                    // Skills Section
+                    new Paragraph({
+                        spacing: {
+                            before: template.spacing.sectionBefore,
+                            after: template.spacing.sectionAfter,
+                        },
+                        children: [
+                            new TextRun({
+                                text: "SKILLS",
+                                bold: true,
+                                size: template.fontSize.sectionHeader,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({
+                                text: data.skills.join(" • "),
+                                size: template.fontSize.content,
+                                font: template.fontFamily,
+                            }),
+                        ],
+                    }),
+                ],
+            }],
         });
 
-        // Generate the document
-        const buffer = await docx.Packer.toBlob(doc);
-        return buffer;
+        return docxLibrary.Packer.toBlob(doc);
     } catch (error) {
         console.error('Error in generateWordDocument:', error);
         throw new Error('Failed to generate Word document: ' + error.message);
