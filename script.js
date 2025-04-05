@@ -242,10 +242,14 @@ function getTemplate(templateName) {
                     </div>
                 </header>
                 
+                <hr class="section-divider" />
+                
                 <section class="summary">
                     <h2>Professional Summary</h2>
                     <p>${data.summary}</p>
                 </section>
+
+                <hr class="section-divider" />
 
                 <section class="experience">
                     <h2>Work Experience</h2>
@@ -259,6 +263,8 @@ function getTemplate(templateName) {
                     `).join('')}
                 </section>
 
+                <hr class="section-divider" />
+
                 <section class="education">
                     <h2>Education</h2>
                     ${data.education.map(edu => `
@@ -269,6 +275,8 @@ function getTemplate(templateName) {
                         </div>
                     `).join('')}
                 </section>
+
+                <hr class="section-divider" />
 
                 <section class="skills">
                     <h2>Skills</h2>
@@ -292,11 +300,15 @@ function getTemplate(templateName) {
                     </div>
                 </header>
                 
+                <hr class="section-divider" />
+                
                 <div class="content-wrapper">
                     <section class="summary">
                         <h2><i class="fas fa-user-circle"></i> Professional Summary</h2>
                         <p>${data.summary}</p>
                     </section>
+
+                    <hr class="section-divider" />
 
                     <section class="experience">
                         <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
@@ -312,6 +324,8 @@ function getTemplate(templateName) {
                         `).join('')}
                     </section>
 
+                    <hr class="section-divider" />
+
                     <section class="education">
                         <h2><i class="fas fa-graduation-cap"></i> Education</h2>
                         ${data.education.map(edu => `
@@ -324,6 +338,8 @@ function getTemplate(templateName) {
                             </div>
                         `).join('')}
                     </section>
+
+                    <hr class="section-divider" />
 
                     <section class="skills">
                         <h2><i class="fas fa-tools"></i> Skills</h2>
@@ -344,11 +360,15 @@ function getTemplate(templateName) {
                     </div>
                 </header>
                 
+                <hr class="section-divider" />
+                
                 <div class="content-grid">
                     <section class="summary">
                         <h2>About</h2>
                         <p>${data.summary}</p>
                     </section>
+
+                    <hr class="section-divider" />
 
                     <section class="experience">
                         <h2>Experience</h2>
@@ -364,6 +384,8 @@ function getTemplate(templateName) {
                         `).join('')}
                     </section>
 
+                    <hr class="section-divider" />
+
                     <section class="education">
                         <h2>Education</h2>
                         ${data.education.map(edu => `
@@ -376,6 +398,8 @@ function getTemplate(templateName) {
                             </div>
                         `).join('')}
                     </section>
+
+                    <hr class="section-divider" />
 
                     <section class="skills">
                         <h2>Skills</h2>
@@ -568,6 +592,22 @@ async function generateWordDocument(data) {
                         ],
                     }),
 
+                    // Section separator
+                    new Paragraph({
+                        spacing: {
+                            before: 200,
+                            after: 200,
+                        },
+                        border: {
+                            bottom: {
+                                color: template.colors.primary,
+                                space: 1,
+                                style: BorderStyle.SINGLE,
+                                size: 6,
+                            },
+                        },
+                    }),
+
                     // Professional Summary
                     new Paragraph({
                         spacing: {
@@ -592,6 +632,22 @@ async function generateWordDocument(data) {
                                 font: template.fontFamily,
                             }),
                         ],
+                    }),
+
+                    // Section separator
+                    new Paragraph({
+                        spacing: {
+                            before: 200,
+                            after: 200,
+                        },
+                        border: {
+                            bottom: {
+                                color: template.colors.primary,
+                                space: 1,
+                                style: BorderStyle.SINGLE,
+                                size: 6,
+                            },
+                        },
                     }),
 
                     // Experience Section
@@ -645,6 +701,22 @@ async function generateWordDocument(data) {
                         }),
                     ]).flat(),
 
+                    // Section separator
+                    new Paragraph({
+                        spacing: {
+                            before: 200,
+                            after: 200,
+                        },
+                        border: {
+                            bottom: {
+                                color: template.colors.primary,
+                                space: 1,
+                                style: BorderStyle.SINGLE,
+                                size: 6,
+                            },
+                        },
+                    }),
+
                     // Education Section
                     new Paragraph({
                         spacing: {
@@ -686,6 +758,22 @@ async function generateWordDocument(data) {
                             },
                         }),
                     ]).flat(),
+
+                    // Section separator
+                    new Paragraph({
+                        spacing: {
+                            before: 200,
+                            after: 200,
+                        },
+                        border: {
+                            bottom: {
+                                color: template.colors.primary,
+                                space: 1,
+                                style: BorderStyle.SINGLE,
+                                size: 6,
+                            },
+                        },
+                    }),
 
                     // Skills Section
                     new Paragraph({

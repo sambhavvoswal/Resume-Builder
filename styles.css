@@ -834,4 +834,32 @@ footer {
 [data-theme="light"] .resume .skill-item {
     background: #f5f5f5;
     color: #333;
+}
+
+/* Section Divider Styles */
+.resume .section-divider {
+    height: 2px;
+    background: var(--primary-color);
+    border: none;
+    margin: 1.5rem 0;
+    opacity: 0.6;
+}
+
+.resume.modern .section-divider {
+    background: var(--primary-color);
+    height: 2px;
+    margin: 1.5rem 0;
+}
+
+.resume.minimal .section-divider {
+    background: #ddd;
+    height: 1px;
+    margin: 1.2rem 0;
+}
+
+.resume.professional .section-divider {
+    background: var(--primary-color);
+    height: 2px;
+    margin: 1.8rem 0;
+    opacity: 0.7;
 } 
