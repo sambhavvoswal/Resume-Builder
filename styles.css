@@ -504,6 +504,15 @@ footer {
     color: var(--primary-color);
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.resume.modern .company-duration,
+.resume.modern .institution-year {
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 /* Minimal Template */
@@ -541,6 +550,21 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.resume.minimal h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.resume.minimal .company-duration,
+.resume.minimal .institution-year {
+    color: #666;
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
@@ -585,9 +609,15 @@ footer {
     color: var(--primary-color);
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.resume.professional .company-duration,
+.resume.professional .institution-year {
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 /* Academic Template */
@@ -1061,4 +1091,32 @@ footer {
 
 .remove-section {
     white-space: nowrap;
+}
+
+/* Update custom section styles */
+.resume .custom-section-content h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.resume .company-duration,
+.resume .institution-year {
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.resume .entry-date {
+    color: #666;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.resume .custom-entry-header {
+    margin-bottom: 0.5rem;
 } 

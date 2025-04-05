@@ -264,27 +264,25 @@ function getTemplate(templateName) {
                 <header>
                     <h1>${data.personalInfo.fullName}</h1>
                     <div class="contact-info">
-                        <p>${data.personalInfo.email} | ${data.personalInfo.phone}</p>
-                        <p>${data.personalInfo.location}</p>
+                        <p>${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}</p>
                     </div>
                 </header>
                 
                 <hr class="section-divider" />
                 
                 <section class="summary">
-                    <h2>Professional Summary</h2>
+                    <h2>PROFESSIONAL SUMMARY</h2>
                     <p>${data.summary}</p>
                 </section>
 
                 <hr class="section-divider" />
 
                 <section class="experience">
-                    <h2>Work Experience</h2>
+                    <h2>EXPERIENCE</h2>
                     ${data.experience.map(exp => `
                         <div class="experience-item">
                             <h3>${exp.position}</h3>
-                            <p class="company">${exp.company}</p>
-                            <p class="duration">${exp.duration}</p>
+                            <p class="company-duration">${exp.company} | ${exp.duration}</p>
                             <p class="description">${exp.description}</p>
                         </div>
                     `).join('')}
@@ -293,12 +291,11 @@ function getTemplate(templateName) {
                 <hr class="section-divider" />
 
                 <section class="education">
-                    <h2>Education</h2>
+                    <h2>EDUCATION</h2>
                     ${data.education.map(edu => `
                         <div class="education-item">
                             <h3>${edu.degree}</h3>
-                            <p class="institution">${edu.institution}</p>
-                            <p class="year">${edu.year}</p>
+                            <p class="institution-year">${edu.institution} | ${edu.year}</p>
                         </div>
                     `).join('')}
                 </section>
@@ -307,11 +304,13 @@ function getTemplate(templateName) {
                     ${data.customSections.map(section => `
                         <hr class="section-divider" />
                         <section class="custom-section-content">
-                            <h2>${section.title}</h2>
+                            <h2>${section.title.toUpperCase()}</h2>
                             ${section.entries.map(entry => `
                                 <div class="custom-entry-item">
-                                    <h3>${entry.title}</h3>
-                                    ${entry.date ? `<p class="entry-date">${entry.date}</p>` : ''}
+                                    <div class="custom-entry-header">
+                                        <h3>${entry.title}</h3>
+                                        ${entry.date ? `<span class="entry-date">${entry.date}</span>` : ''}
+                                    </div>
                                     <p class="entry-description">${entry.description}</p>
                                 </div>
                             `).join('')}
@@ -322,7 +321,7 @@ function getTemplate(templateName) {
                 <hr class="section-divider" />
 
                 <section class="skills">
-                    <h2>Skills</h2>
+                    <h2>SKILLS</h2>
                     <div class="skills-list">
                         ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                     </div>
@@ -336,9 +335,7 @@ function getTemplate(templateName) {
                     <div class="header-content">
                         <h1>${data.personalInfo.fullName}</h1>
                         <div class="contact-info">
-                            <p><i class="fas fa-envelope"></i> ${data.personalInfo.email}</p>
-                            <p><i class="fas fa-phone"></i> ${data.personalInfo.phone}</p>
-                            <p><i class="fas fa-map-marker-alt"></i> ${data.personalInfo.location}</p>
+                            <p>${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}</p>
                         </div>
                     </div>
                 </header>
@@ -347,21 +344,18 @@ function getTemplate(templateName) {
                 
                 <div class="content-wrapper">
                     <section class="summary">
-                        <h2><i class="fas fa-user-circle"></i> Professional Summary</h2>
+                        <h2>PROFESSIONAL SUMMARY</h2>
                         <p>${data.summary}</p>
                     </section>
 
                     <hr class="section-divider" />
 
                     <section class="experience">
-                        <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+                        <h2>EXPERIENCE</h2>
                         ${data.experience.map(exp => `
                             <div class="experience-item">
-                                <div class="experience-header">
-                                    <h3>${exp.position}</h3>
-                                    <span class="company">${exp.company}</span>
-                                </div>
-                                <span class="duration">${exp.duration}</span>
+                                <h3>${exp.position}</h3>
+                                <p class="company-duration">${exp.company} | ${exp.duration}</p>
                                 <p class="description">${exp.description}</p>
                             </div>
                         `).join('')}
@@ -370,14 +364,11 @@ function getTemplate(templateName) {
                     <hr class="section-divider" />
 
                     <section class="education">
-                        <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                        <h2>EDUCATION</h2>
                         ${data.education.map(edu => `
                             <div class="education-item">
-                                <div class="education-header">
-                                    <h3>${edu.degree}</h3>
-                                    <span class="institution">${edu.institution}</span>
-                                </div>
-                                <span class="year">${edu.year}</span>
+                                <h3>${edu.degree}</h3>
+                                <p class="institution-year">${edu.institution} | ${edu.year}</p>
                             </div>
                         `).join('')}
                     </section>
@@ -386,7 +377,7 @@ function getTemplate(templateName) {
                         ${data.customSections.map(section => `
                             <hr class="section-divider" />
                             <section class="custom-section-content">
-                                <h2><i class="fas fa-clipboard-list"></i> ${section.title}</h2>
+                                <h2>${section.title.toUpperCase()}</h2>
                                 ${section.entries.map(entry => `
                                     <div class="custom-entry-item">
                                         <div class="custom-entry-header">
@@ -403,7 +394,7 @@ function getTemplate(templateName) {
                     <hr class="section-divider" />
 
                     <section class="skills">
-                        <h2><i class="fas fa-tools"></i> Skills</h2>
+                        <h2>SKILLS</h2>
                         <div class="skills-list">
                             ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                         </div>
@@ -417,7 +408,7 @@ function getTemplate(templateName) {
                 <header>
                     <h1>${data.personalInfo.fullName}</h1>
                     <div class="contact-info">
-                        <p>${data.personalInfo.email} • ${data.personalInfo.phone} • ${data.personalInfo.location}</p>
+                        <p>${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}</p>
                     </div>
                 </header>
                 
@@ -425,21 +416,18 @@ function getTemplate(templateName) {
                 
                 <div class="content-grid">
                     <section class="summary">
-                        <h2>About</h2>
+                        <h2>PROFESSIONAL SUMMARY</h2>
                         <p>${data.summary}</p>
                     </section>
 
                     <hr class="section-divider" />
 
                     <section class="experience">
-                        <h2>Experience</h2>
+                        <h2>EXPERIENCE</h2>
                         ${data.experience.map(exp => `
                             <div class="experience-item">
-                                <div class="experience-header">
-                                    <h3>${exp.position}</h3>
-                                    <span class="duration">${exp.duration}</span>
-                                </div>
-                                <p class="company">${exp.company}</p>
+                                <h3>${exp.position}</h3>
+                                <p class="company-duration">${exp.company} | ${exp.duration}</p>
                                 <p class="description">${exp.description}</p>
                             </div>
                         `).join('')}
@@ -448,14 +436,11 @@ function getTemplate(templateName) {
                     <hr class="section-divider" />
 
                     <section class="education">
-                        <h2>Education</h2>
+                        <h2>EDUCATION</h2>
                         ${data.education.map(edu => `
                             <div class="education-item">
-                                <div class="education-header">
-                                    <h3>${edu.degree}</h3>
-                                    <span class="year">${edu.year}</span>
-                                </div>
-                                <p class="institution">${edu.institution}</p>
+                                <h3>${edu.degree}</h3>
+                                <p class="institution-year">${edu.institution} | ${edu.year}</p>
                             </div>
                         `).join('')}
                     </section>
@@ -464,7 +449,7 @@ function getTemplate(templateName) {
                         ${data.customSections.map(section => `
                             <hr class="section-divider" />
                             <section class="custom-section-content">
-                                <h2>${section.title}</h2>
+                                <h2>${section.title.toUpperCase()}</h2>
                                 ${section.entries.map(entry => `
                                     <div class="custom-entry-item">
                                         <div class="custom-entry-header">
@@ -481,7 +466,7 @@ function getTemplate(templateName) {
                     <hr class="section-divider" />
 
                     <section class="skills">
-                        <h2>Skills</h2>
+                        <h2>SKILLS</h2>
                         <div class="skills-list">
                             ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                         </div>
