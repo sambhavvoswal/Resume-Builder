@@ -82,6 +82,23 @@ const TEMPLATES = {
     }
 };
 
+function createHorizontalLine(style) {
+    return new Paragraph({
+        spacing: {
+            before: 0,
+            after: style.spacing.contentAfter,
+        },
+        borders: {
+            bottom: {
+                color: style.colors.primary,
+                space: 1,
+                style: BorderStyle.SINGLE,
+                size: 20,
+            },
+        },
+    });
+}
+
 function createSection(title, content, style, isHeader = false) {
     const sections = [];
     
@@ -123,6 +140,11 @@ function createSection(title, content, style, isHeader = false) {
             ],
         })
     );
+
+    // Add a horizontal line after each section (except for header sections)
+    if (!isHeader) {
+        sections.push(createHorizontalLine(style));
+    }
 
     return sections;
 }
