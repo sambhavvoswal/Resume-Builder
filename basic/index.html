@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Resume Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Resume Builder</h1>
+        <p>Quick and simple resume generator</p>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2>Enter Your Details</h2>
+                <form id="resume-form">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" required>
+                        </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="form-section">
+                        <h3>Professional Summary</h3>
+                        <div class="form-group">
+                            <textarea id="summary" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="form-section">
+                        <h3>Work Experience</h3>
+                        <div id="experience-container">
+                            <div class="experience-entry">
+                                <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" class="company-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="position">Position</label>
+                                    <input type="text" class="position" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="duration">Duration</label>
+                                    <input type="text" class="duration" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="description" rows="2" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="add-experience" class="button secondary">Add Experience</button>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="form-section">
+                        <h3>Education</h3>
+                        <div id="education-container">
+                            <div class="education-entry">
+                                <div class="form-group">
+                                    <label for="institution">Institution</label>
+                                    <input type="text" class="institution" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="degree">Degree</label>
+                                    <input type="text" class="degree" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="year">Year</label>
+                                    <input type="text" class="year" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="add-education" class="button secondary">Add Education</button>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="form-section">
+                        <h3>Skills</h3>
+                        <div class="form-group">
+                            <label for="skills">Skills (comma separated)</label>
+                            <input type="text" id="skills" required>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="preview-btn" class="button">Preview</button>
+                        <button type="button" id="generate-btn" class="button primary">Generate Word</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-container hidden" id="preview-section">
+                <h2>Resume Preview</h2>
+                <div id="resume-preview" class="resume-preview"></div>
+                <div class="button-group">
+                    <button type="button" id="edit-btn" class="button">Edit</button>
+                    <button type="button" id="download-btn" class="button primary">Download</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- <footer>
+        <p>&copy; 2024 Resume Builder</p>
+    </footer> -->
+
+    <script src="script.js"></script>
+</body>
+</html> 
