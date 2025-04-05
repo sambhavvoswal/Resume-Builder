@@ -46,10 +46,6 @@
                 <div class="template-card" data-template="modern">
                     <div class="template-preview">
                         <img src="templates/modern.png" alt="Modern Template">
-                        <div class="template-overlay">
-                            <button class="preview-btn">Preview</button>
-                            <button class="select-btn">Select</button>
-                        </div>
                     </div>
                     <h3>Modern</h3>
                     <p>Clean and contemporary design with balanced spacing</p>
@@ -58,10 +54,6 @@
                 <div class="template-card" data-template="professional">
                     <div class="template-preview">
                         <img src="templates/professional.png" alt="Professional Template">
-                        <div class="template-overlay">
-                            <button class="preview-btn">Preview</button>
-                            <button class="select-btn">Select</button>
-                        </div>
                     </div>
                     <h3>Professional</h3>
                     <p>Traditional business style with classic formatting</p>
@@ -70,19 +62,15 @@
                 <div class="template-card" data-template="minimal">
                     <div class="template-preview">
                         <img src="templates/minimal.png" alt="Minimal Template">
-                        <div class="template-overlay">
-                            <button class="preview-btn">Preview</button>
-                            <button class="select-btn">Select</button>
-                        </div>
                     </div>
                     <h3>Minimal</h3>
                     <p>Simple and elegant design with clean typography</p>
                 </div>
             </div>
         </section>
-
+<br> <br>
         <section id="builder">
-            <h2>Build Your Resume</h2>
+            <h2>Build Your Resume</h2> <br>
             <form id="resume-form">
                 <div class="form-section">
                     <h3><i class="fas fa-user"></i> Personal Information</h3>
@@ -163,6 +151,19 @@
                 </div>
 
                 <div class="form-section">
+                    <h3><i class="fas fa-clipboard-list"></i> Custom Sections</h3>
+                    <p class="section-description">Add custom sections like Publications, Patents, Projects, Interests, or anything else you'd like to include.</p>
+                    
+                    <div id="custom-sections-container">
+                        <!-- Custom sections will be added here -->
+                    </div>
+                    
+                    <button type="button" id="add-custom-section" class="secondary-button">
+                        <i class="fas fa-plus"></i> Add Custom Section
+                    </button>
+                </div>
+
+                <div class="form-section">
                     <h3><i class="fas fa-tools"></i> Skills</h3>
                     <div class="form-group">
                         <label for="skills">Skills (comma-separated)</label>
@@ -205,5 +206,6 @@
     </button>
 
     <script src="script.js"></script>
+    <script src="recommendation.js"></script>
 </body>
 </html> 

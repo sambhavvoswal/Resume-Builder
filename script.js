@@ -38,8 +38,10 @@ const builderSection = document.getElementById('builder');
 const resumePreview = document.getElementById('resume-preview');
 const addExperienceBtn = document.getElementById('add-experience');
 const addEducationBtn = document.getElementById('add-education');
+const addCustomSectionBtn = document.getElementById('add-custom-section');
 const experienceContainer = document.getElementById('experience-container');
 const educationContainer = document.getElementById('education-container');
+const customSectionsContainer = document.getElementById('custom-sections-container');
 const getStartedBtn = document.querySelector('.cta-button');
 
 // Smooth scroll functionality
@@ -122,12 +124,14 @@ async function initializeApp() {
 // Start the application
 initializeApp();
 
-// Template selection
-templateCards.forEach(card => {
+// Template selection handling
+document.querySelectorAll('.template-card').forEach(card => {
     card.addEventListener('click', () => {
-        templateCards.forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedTemplate = card.dataset.template;
+        const template = card.getAttribute('data-template');
+        document.querySelector(`input[name="resume-style"][value="${template}"]`).checked = true;
+        
+        // Scroll to builder section
+        document.getElementById('builder').scrollIntoView({ behavior: 'smooth' });
     });
 });
 
@@ -198,6 +202,7 @@ function collectFormData() {
         summary: document.getElementById('summary').value,
         experience: [],
         education: [],
+        customSections: [],
         skills: document.getElementById('skills').value.split(',').map(skill => skill.trim())
     };
 
@@ -218,6 +223,28 @@ function collectFormData() {
             degree: entry.querySelector('.degree').value,
             year: entry.querySelector('.year').value
         });
+    });
+
+    // Collect custom sections
+    document.querySelectorAll('.custom-section').forEach(section => {
+        const sectionTitle = section.querySelector('.section-title').value;
+        const entries = [];
+
+        // Collect entries for this section
+        section.querySelectorAll('.custom-entry').forEach(entry => {
+            entries.push({
+                title: entry.querySelector('.entry-title').value,
+                date: entry.querySelector('.entry-date').value,
+                description: entry.querySelector('.entry-description').value
+            });
+        });
+
+        if (sectionTitle && entries.length > 0) {
+            formData.customSections.push({
+                title: sectionTitle,
+                entries: entries
+            });
+        }
     });
 
     return formData;
@@ -275,6 +302,22 @@ function getTemplate(templateName) {
                         </div>
                     `).join('')}
                 </section>
+
+                ${data.customSections && data.customSections.length > 0 ? `
+                    ${data.customSections.map(section => `
+                        <hr class="section-divider" />
+                        <section class="custom-section-content">
+                            <h2>${section.title}</h2>
+                            ${section.entries.map(entry => `
+                                <div class="custom-entry-item">
+                                    <h3>${entry.title}</h3>
+                                    ${entry.date ? `<p class="entry-date">${entry.date}</p>` : ''}
+                                    <p class="entry-description">${entry.description}</p>
+                                </div>
+                            `).join('')}
+                        </section>
+                    `).join('')}
+                ` : ''}
 
                 <hr class="section-divider" />
 
@@ -339,6 +382,24 @@ function getTemplate(templateName) {
                         `).join('')}
                     </section>
 
+                    ${data.customSections && data.customSections.length > 0 ? `
+                        ${data.customSections.map(section => `
+                            <hr class="section-divider" />
+                            <section class="custom-section-content">
+                                <h2><i class="fas fa-clipboard-list"></i> ${section.title}</h2>
+                                ${section.entries.map(entry => `
+                                    <div class="custom-entry-item">
+                                        <div class="custom-entry-header">
+                                            <h3>${entry.title}</h3>
+                                            ${entry.date ? `<span class="entry-date">${entry.date}</span>` : ''}
+                                        </div>
+                                        <p class="entry-description">${entry.description}</p>
+                                    </div>
+                                `).join('')}
+                            </section>
+                        `).join('')}
+                    ` : ''}
+
                     <hr class="section-divider" />
 
                     <section class="skills">
@@ -398,6 +459,24 @@ function getTemplate(templateName) {
                             </div>
                         `).join('')}
                     </section>
+
+                    ${data.customSections && data.customSections.length > 0 ? `
+                        ${data.customSections.map(section => `
+                            <hr class="section-divider" />
+                            <section class="custom-section-content">
+                                <h2>${section.title}</h2>
+                                ${section.entries.map(entry => `
+                                    <div class="custom-entry-item">
+                                        <div class="custom-entry-header">
+                                            <h3>${entry.title}</h3>
+                                            ${entry.date ? `<span class="entry-date">${entry.date}</span>` : ''}
+                                        </div>
+                                        <p class="entry-description">${entry.description}</p>
+                                    </div>
+                                `).join('')}
+                            </section>
+                        `).join('')}
+                    ` : ''}
 
                     <hr class="section-divider" />
 
@@ -548,6 +627,359 @@ async function generateWordDocument(data) {
         const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } = docxLibrary;
         const template = WORD_TEMPLATES[selectedTemplate] || WORD_TEMPLATES.modern;
 
+        // Build the document elements
+        const docElements = [];
+
+        // Header with name and contact
+        docElements.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: {
+                    after: 200,
+                },
+                children: [
+                    new TextRun({
+                        text: data.personalInfo.fullName,
+                        bold: true,
+                        size: template.fontSize.name,
+                        font: template.fontFamily,
+                        color: template.colors.primary,
+                    }),
+                ],
+            }),
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: {
+                    after: 400,
+                },
+                children: [
+                    new TextRun({
+                        text: `${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}`,
+                        size: template.fontSize.contact,
+                        font: template.fontFamily,
+                        color: template.colors.secondary,
+                    }),
+                ],
+            }),
+
+            // Section separator
+            new Paragraph({
+                spacing: {
+                    before: 200,
+                    after: 200,
+                },
+                border: {
+                    bottom: {
+                        color: template.colors.primary,
+                        space: 1,
+                        style: BorderStyle.SINGLE,
+                        size: 6,
+                    },
+                },
+            })
+        );
+
+        // Professional Summary
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: template.spacing.sectionBefore,
+                    after: template.spacing.sectionAfter,
+                },
+                children: [
+                    new TextRun({
+                        text: "PROFESSIONAL SUMMARY",
+                        bold: true,
+                        size: template.fontSize.sectionHeader,
+                        font: template.fontFamily,
+                        color: template.colors.primary,
+                    }),
+                ],
+            }),
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: data.summary,
+                        size: template.fontSize.content,
+                        font: template.fontFamily,
+                    }),
+                ],
+            }),
+
+            // Section separator
+            new Paragraph({
+                spacing: {
+                    before: 200,
+                    after: 200,
+                },
+                border: {
+                    bottom: {
+                        color: template.colors.primary,
+                        space: 1,
+                        style: BorderStyle.SINGLE,
+                        size: 6,
+                    },
+                },
+            })
+        );
+
+        // Experience Section
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: template.spacing.sectionBefore,
+                    after: template.spacing.sectionAfter,
+                },
+                children: [
+                    new TextRun({
+                        text: "EXPERIENCE",
+                        bold: true,
+                        size: template.fontSize.sectionHeader,
+                        font: template.fontFamily,
+                        color: template.colors.primary,
+                    }),
+                ],
+            })
+        );
+        
+        // Add experience items
+        data.experience.forEach(exp => {
+            docElements.push(
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: exp.position,
+                            bold: true,
+                            size: template.fontSize.content,
+                            font: template.fontFamily,
+                        }),
+                    ],
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: `${exp.company} | ${exp.duration}`,
+                            size: template.fontSize.content,
+                            font: template.fontFamily,
+                            color: template.colors.secondary,
+                        }),
+                    ],
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: exp.description,
+                            size: template.fontSize.content,
+                            font: template.fontFamily,
+                        }),
+                    ],
+                    spacing: {
+                        after: 200,
+                    },
+                })
+            );
+        });
+
+        // Section separator
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: 200,
+                    after: 200,
+                },
+                border: {
+                    bottom: {
+                        color: template.colors.primary,
+                        space: 1,
+                        style: BorderStyle.SINGLE,
+                        size: 6,
+                    },
+                },
+            })
+        );
+
+        // Education Section
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: template.spacing.sectionBefore,
+                    after: template.spacing.sectionAfter,
+                },
+                children: [
+                    new TextRun({
+                        text: "EDUCATION",
+                        bold: true,
+                        size: template.fontSize.sectionHeader,
+                        font: template.fontFamily,
+                        color: template.colors.primary,
+                    }),
+                ],
+            })
+        );
+        
+        // Add education items
+        data.education.forEach(edu => {
+            docElements.push(
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: edu.degree,
+                            bold: true,
+                            size: template.fontSize.content,
+                            font: template.fontFamily,
+                        }),
+                    ],
+                }),
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: `${edu.institution} | ${edu.year}`,
+                            size: template.fontSize.content,
+                            font: template.fontFamily,
+                            color: template.colors.secondary,
+                        }),
+                    ],
+                    spacing: {
+                        after: 200,
+                    },
+                })
+            );
+        });
+
+        // Custom Sections (before Skills)
+        if (data.customSections && data.customSections.length > 0) {
+            data.customSections.forEach(section => {
+                // Section separator
+                docElements.push(
+                    new Paragraph({
+                        spacing: {
+                            before: 200,
+                            after: 200,
+                        },
+                        border: {
+                            bottom: {
+                                color: template.colors.primary,
+                                space: 1,
+                                style: BorderStyle.SINGLE,
+                                size: 6,
+                            },
+                        },
+                    }),
+                    // Section title
+                    new Paragraph({
+                        spacing: {
+                            before: template.spacing.sectionBefore,
+                            after: template.spacing.sectionAfter,
+                        },
+                        children: [
+                            new TextRun({
+                                text: section.title.toUpperCase(),
+                                bold: true,
+                                size: template.fontSize.sectionHeader,
+                                font: template.fontFamily,
+                                color: template.colors.primary,
+                            }),
+                        ],
+                    })
+                );
+
+                // Add section entries
+                section.entries.forEach(entry => {
+                    docElements.push(
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: entry.title,
+                                    bold: true,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                }),
+                            ],
+                        })
+                    );
+
+                    // Add date if it exists
+                    if (entry.date) {
+                        docElements.push(
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: entry.date,
+                                        size: template.fontSize.content,
+                                        font: template.fontFamily,
+                                        color: template.colors.secondary,
+                                    }),
+                                ],
+                            })
+                        );
+                    }
+
+                    // Add description
+                    docElements.push(
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: entry.description,
+                                    size: template.fontSize.content,
+                                    font: template.fontFamily,
+                                }),
+                            ],
+                            spacing: {
+                                after: 200,
+                            },
+                        })
+                    );
+                });
+            });
+        }
+
+        // Section separator (before Skills)
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: 200,
+                    after: 200,
+                },
+                border: {
+                    bottom: {
+                        color: template.colors.primary,
+                        space: 1,
+                        style: BorderStyle.SINGLE,
+                        size: 6,
+                    },
+                },
+            })
+        );
+
+        // Skills Section
+        docElements.push(
+            new Paragraph({
+                spacing: {
+                    before: template.spacing.sectionBefore,
+                    after: template.spacing.sectionAfter,
+                },
+                children: [
+                    new TextRun({
+                        text: "SKILLS",
+                        bold: true,
+                        size: template.fontSize.sectionHeader,
+                        font: template.fontFamily,
+                        color: template.colors.primary,
+                    }),
+                ],
+            }),
+            new Paragraph({
+                children: [
+                    new TextRun({
+                        text: data.skills.join(" • "),
+                        size: template.fontSize.content,
+                        font: template.fontFamily,
+                    }),
+                ],
+            })
+        );
+
+        // Create document with all elements
         const doc = new Document({
             sections: [{
                 properties: {
@@ -560,247 +992,7 @@ async function generateWordDocument(data) {
                         },
                     },
                 },
-                children: [
-                    // Header with name and contact
-                    new Paragraph({
-                        alignment: AlignmentType.CENTER,
-                        spacing: {
-                            after: 200,
-                        },
-                        children: [
-                            new TextRun({
-                                text: data.personalInfo.fullName,
-                                bold: true,
-                                size: template.fontSize.name,
-                                font: template.fontFamily,
-                                color: template.colors.primary,
-                            }),
-                        ],
-                    }),
-                    new Paragraph({
-                        alignment: AlignmentType.CENTER,
-                        spacing: {
-                            after: 400,
-                        },
-                        children: [
-                            new TextRun({
-                                text: `${data.personalInfo.email} | ${data.personalInfo.phone} | ${data.personalInfo.location}`,
-                                size: template.fontSize.contact,
-                                font: template.fontFamily,
-                                color: template.colors.secondary,
-                            }),
-                        ],
-                    }),
-
-                    // Section separator
-                    new Paragraph({
-                        spacing: {
-                            before: 200,
-                            after: 200,
-                        },
-                        border: {
-                            bottom: {
-                                color: template.colors.primary,
-                                space: 1,
-                                style: BorderStyle.SINGLE,
-                                size: 6,
-                            },
-                        },
-                    }),
-
-                    // Professional Summary
-                    new Paragraph({
-                        spacing: {
-                            before: template.spacing.sectionBefore,
-                            after: template.spacing.sectionAfter,
-                        },
-                        children: [
-                            new TextRun({
-                                text: "PROFESSIONAL SUMMARY",
-                                bold: true,
-                                size: template.fontSize.sectionHeader,
-                                font: template.fontFamily,
-                                color: template.colors.primary,
-                            }),
-                        ],
-                    }),
-                    new Paragraph({
-                        children: [
-                            new TextRun({
-                                text: data.summary,
-                                size: template.fontSize.content,
-                                font: template.fontFamily,
-                            }),
-                        ],
-                    }),
-
-                    // Section separator
-                    new Paragraph({
-                        spacing: {
-                            before: 200,
-                            after: 200,
-                        },
-                        border: {
-                            bottom: {
-                                color: template.colors.primary,
-                                space: 1,
-                                style: BorderStyle.SINGLE,
-                                size: 6,
-                            },
-                        },
-                    }),
-
-                    // Experience Section
-                    new Paragraph({
-                        spacing: {
-                            before: template.spacing.sectionBefore,
-                            after: template.spacing.sectionAfter,
-                        },
-                        children: [
-                            new TextRun({
-                                text: "EXPERIENCE",
-                                bold: true,
-                                size: template.fontSize.sectionHeader,
-                                font: template.fontFamily,
-                                color: template.colors.primary,
-                            }),
-                        ],
-                    }),
-                    ...data.experience.map(exp => [
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: exp.position,
-                                    bold: true,
-                                    size: template.fontSize.content,
-                                    font: template.fontFamily,
-                                }),
-                            ],
-                        }),
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: `${exp.company} | ${exp.duration}`,
-                                    size: template.fontSize.content,
-                                    font: template.fontFamily,
-                                    color: template.colors.secondary,
-                                }),
-                            ],
-                        }),
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: exp.description,
-                                    size: template.fontSize.content,
-                                    font: template.fontFamily,
-                                }),
-                            ],
-                            spacing: {
-                                after: 200,
-                            },
-                        }),
-                    ]).flat(),
-
-                    // Section separator
-                    new Paragraph({
-                        spacing: {
-                            before: 200,
-                            after: 200,
-                        },
-                        border: {
-                            bottom: {
-                                color: template.colors.primary,
-                                space: 1,
-                                style: BorderStyle.SINGLE,
-                                size: 6,
-                            },
-                        },
-                    }),
-
-                    // Education Section
-                    new Paragraph({
-                        spacing: {
-                            before: template.spacing.sectionBefore,
-                            after: template.spacing.sectionAfter,
-                        },
-                        children: [
-                            new TextRun({
-                                text: "EDUCATION",
-                                bold: true,
-                                size: template.fontSize.sectionHeader,
-                                font: template.fontFamily,
-                                color: template.colors.primary,
-                            }),
-                        ],
-                    }),
-                    ...data.education.map(edu => [
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: edu.degree,
-                                    bold: true,
-                                    size: template.fontSize.content,
-                                    font: template.fontFamily,
-                                }),
-                            ],
-                        }),
-                        new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: `${edu.institution} | ${edu.year}`,
-                                    size: template.fontSize.content,
-                                    font: template.fontFamily,
-                                    color: template.colors.secondary,
-                                }),
-                            ],
-                            spacing: {
-                                after: 200,
-                            },
-                        }),
-                    ]).flat(),
-
-                    // Section separator
-                    new Paragraph({
-                        spacing: {
-                            before: 200,
-                            after: 200,
-                        },
-                        border: {
-                            bottom: {
-                                color: template.colors.primary,
-                                space: 1,
-                                style: BorderStyle.SINGLE,
-                                size: 6,
-                            },
-                        },
-                    }),
-
-                    // Skills Section
-                    new Paragraph({
-                        spacing: {
-                            before: template.spacing.sectionBefore,
-                            after: template.spacing.sectionAfter,
-                        },
-                        children: [
-                            new TextRun({
-                                text: "SKILLS",
-                                bold: true,
-                                size: template.fontSize.sectionHeader,
-                                font: template.fontFamily,
-                                color: template.colors.primary,
-                            }),
-                        ],
-                    }),
-                    new Paragraph({
-                        children: [
-                            new TextRun({
-                                text: data.skills.join(" • "),
-                                size: template.fontSize.content,
-                                font: template.fontFamily,
-                            }),
-                        ],
-                    }),
-                ],
+                children: docElements,
             }],
         });
 
@@ -809,4 +1001,88 @@ async function generateWordDocument(data) {
         console.error('Error in generateWordDocument:', error);
         throw new Error('Failed to generate Word document: ' + error.message);
     }
+}
+
+// Add custom section
+addCustomSectionBtn.addEventListener('click', () => {
+    addCustomSection();
+});
+
+// Custom section functionality
+function addCustomSection() {
+    // Create a unique ID for this custom section
+    const sectionId = 'section-' + Date.now();
+    
+    // Create custom section container
+    const customSection = document.createElement('div');
+    customSection.className = 'custom-section';
+    customSection.setAttribute('data-section-id', sectionId);
+    
+    // Add HTML for the custom section
+    customSection.innerHTML = `
+        <div class="section-header">
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" class="section-title" placeholder="e.g., Publications, Patents, Projects" required>
+            </div>
+            <button type="button" class="remove-section secondary-button">Remove Section</button>
+        </div>
+        <div class="custom-entries-container" id="entries-${sectionId}">
+            <!-- Custom entries will be added here -->
+        </div>
+        <button type="button" class="add-entry secondary-button" data-section-id="${sectionId}">
+            <i class="fas fa-plus"></i> Add Entry
+        </button>
+    `;
+    
+    // Add to container
+    customSectionsContainer.appendChild(customSection);
+    
+    // Add first entry automatically
+    addCustomEntry(sectionId);
+    
+    // Add event listener to the add entry button
+    customSection.querySelector('.add-entry').addEventListener('click', (e) => {
+        const sectionId = e.target.getAttribute('data-section-id');
+        addCustomEntry(sectionId);
+    });
+    
+    // Add event listener to remove section button
+    customSection.querySelector('.remove-section').addEventListener('click', () => {
+        customSection.remove();
+    });
+}
+
+// Add custom entry to a section
+function addCustomEntry(sectionId) {
+    const entryContainer = document.getElementById(`entries-${sectionId}`);
+    
+    // Create entry element
+    const entry = document.createElement('div');
+    entry.className = 'custom-entry';
+    
+    // Add HTML for the entry
+    entry.innerHTML = `
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="entry-title" placeholder="Entry title" required>
+        </div>
+        <div class="form-group">
+            <label>Date/Duration (optional)</label>
+            <input type="text" class="entry-date" placeholder="e.g., 2020 or 2019-2021">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="entry-description" rows="3" placeholder="Describe this entry" required></textarea>
+        </div>
+        <button type="button" class="remove-entry secondary-button">Remove Entry</button>
+    `;
+    
+    // Add to container
+    entryContainer.appendChild(entry);
+    
+    // Add event listener to remove entry button
+    entry.querySelector('.remove-entry').addEventListener('click', () => {
+        entry.remove();
+    });
 } 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Authentication Failed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .failure-container {
+            text-align: center;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        
+        .failure-icon {
+            font-size: 4rem;
+            color: #dc3545;
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #0a66c2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #0a57a3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                Resume Builder
+            </div>
+            <div class="nav-links">
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="failure-container">
+            <i class="fas fa-times-circle failure-icon"></i>
+            <h1>LinkedIn Authentication Failed</h1>
+            <p>We couldn't connect to your LinkedIn profile. Please try again.</p>
+            <p>Common reasons for failure:</p>
+            <ul style="text-align: left; display: inline-block; margin: 1rem auto;">
+                <li>LinkedIn authorization was denied</li>
+                <li>There was a network issue</li>
+                <li>Your LinkedIn account has privacy restrictions</li>
+            </ul>
+            <div>
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Import
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Resume Builder. All rights reserved by Team 4n4.</p>
+    </footer>
+</body>
+</html> 

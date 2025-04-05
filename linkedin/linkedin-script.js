@@ -23,41 +23,71 @@ let linkedinData = null;
 let selectedTemplate = 'modern';
 let resumeData = {};
 
+// API base URL (backend)
+const API_BASE_URL = 'http://localhost:5000';
+
 // Initialize docx library
 let docx = window.docx;
 
-// Step 1: Handle LinkedIn URL submission
-linkedinUrlForm.addEventListener('submit', async (e) => {
+// Step 1: Handle LinkedIn URL submission or direct authentication
+linkedinUrlForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const url = linkedinUrlInput.value.trim();
-    if (!isValidLinkedInUrl(url)) {
-        showError('Please enter a valid LinkedIn profile URL.');
-        return;
-    }
+    // Redirect to backend auth route
+    window.location.href = `${API_BASE_URL}/auth/linkedin`;
+});
+
+// Check if we have LinkedIn user data in localStorage (from auth callback)
+document.addEventListener('DOMContentLoaded', async () => {
+    const storedUser = localStorage.getItem('linkedinUser');
     
-    // Show loading spinner
-    urlInputSection.classList.add('hidden');
-    loadingContainer.classList.remove('hidden');
-    
-    try {
-        // In a real implementation, this would call your backend API
-        // Here we're using a mock function that simulates fetching data
-        const data = await fetchLinkedInData(url);
-        linkedinData = data;
-        
-        // Populate the form with LinkedIn data
-        populateReviewForm(data);
-        
-        // Hide loading, show review form
-        loadingContainer.classList.add('hidden');
-        dataReviewSection.classList.remove('hidden');
-        
-        // Update step indicators
-        updateStepIndicators(2);
-    } catch (error) {
-        console.error('Error fetching LinkedIn data:', error);
-        showError(error.message || 'Failed to fetch LinkedIn profile data');
+    if (storedUser) {
+        try {
+            // Parse the stored user data
+            const user = JSON.parse(storedUser);
+            
+            // Show loading spinner
+            urlInputSection.classList.add('hidden');
+            loadingContainer.classList.remove('hidden');
+            
+            // Fetch detailed profile data
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/linkedin/profile`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+                
+                const profileData = await response.json();
+                linkedinData = profileData;
+                
+                // Populate the form with profile data
+                populateReviewForm(profileData);
+                
+                // Hide loading, show review form
+                loadingContainer.classList.add('hidden');
+                dataReviewSection.classList.remove('hidden');
+                
+                // Update step indicators
+                updateStepIndicators(2);
+                
+                // Clear stored user data (one-time use)
+                localStorage.removeItem('linkedinUser');
+                
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+                showError('Failed to fetch LinkedIn profile data. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error parsing stored user data:', error);
+            localStorage.removeItem('linkedinUser');
+        }
     }
 });
 
@@ -132,12 +162,6 @@ document.addEventListener('click', (e) => {
 });
 
 // Helper Functions
-
-// Validate LinkedIn URL format
-function isValidLinkedInUrl(url) {
-    // Basic validation - in a real app, you might want more thorough validation
-    return url.includes('linkedin.com/in/');
-}
 
 // Update step indicators
 function updateStepIndicators(activeStep) {
@@ -643,55 +667,6 @@ async function generateResume(data, templateType) {
         console.error('Error generating resume:', error);
         throw new Error('Failed to generate resume. Please try again.');
     }
-}
-
-// Mock LinkedIn API integration (since we can't directly access LinkedIn API from client-side)
-// In a real application, this would be a call to your backend, which would use the LinkedIn API
-async function fetchLinkedInData(url) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Extract the username from the URL
-    const urlParts = url.split('/');
-    const username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];
-    
-    // In a real app, this would be fetched from your backend
-    // This is just mock data for demonstration
-    return {
-        fullName: "John Doe",
-        headline: "Software Engineer & Web Developer",
-        email: "john.doe@example.com",
-        phone: "(123) 456-7890",
-        location: "San Francisco, CA",
-        summary: "Experienced software engineer with a passion for building innovative web applications. Specializing in frontend development with React and backend development with Node.js. Strong problem-solving skills and a track record of delivering high-quality code.",
-        experience: [
-            {
-                company: "Tech Innovations Inc.",
-                position: "Senior Software Engineer",
-                duration: "Jan 2020 - Present",
-                description: "Lead developer for the company's main product. Implemented new features, improved performance, and mentored junior developers."
-            },
-            {
-                company: "WebSolutions Corp.",
-                position: "Frontend Developer",
-                duration: "Jun 2017 - Dec 2019",
-                description: "Developed responsive web applications using React and Redux. Collaborated with designers to implement UI/UX improvements."
-            }
-        ],
-        education: [
-            {
-                institution: "University of California, Berkeley",
-                degree: "M.S. in Computer Science",
-                year: "2015 - 2017"
-            },
-            {
-                institution: "Stanford University",
-                degree: "B.S. in Computer Science",
-                year: "2011 - 2015"
-            }
-        ],
-        skills: ["JavaScript", "React", "Node.js", "TypeScript", "HTML/CSS", "Git", "Docker", "AWS", "MongoDB", "SQL"]
-    };
 }
 
 // Initialize - select first template by default
