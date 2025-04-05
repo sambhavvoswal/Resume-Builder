@@ -376,6 +376,20 @@ function getTemplate(templateName) {
                         ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                     </div>
                 </section>
+                
+                ${data.customSections && data.customSections.length > 0 ? data.customSections.map(section => `
+                    <section class="custom-section-content">
+                        <h2>${section.title}</h2>
+                        ${section.entries.map(entry => `
+                            <div class="custom-entry-item">
+                                <h3>${entry.title}</h3>
+                                ${entry.subtitle ? `<p class="entry-subtitle">${entry.subtitle}</p>` : ''}
+                                ${entry.date ? `<p class="entry-date">${entry.date}</p>` : ''}
+                                ${entry.description ? `<p class="entry-description">${entry.description}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </section>
+                `).join('') : ''}
             </div>
         `,
         minimal: (data) => `
@@ -426,6 +440,22 @@ function getTemplate(templateName) {
                             ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                         </div>
                     </section>
+                    
+                    ${data.customSections && data.customSections.length > 0 ? data.customSections.map(section => `
+                        <section class="custom-section-content">
+                            <h2>${section.title}</h2>
+                            ${section.entries.map(entry => `
+                                <div class="custom-entry-item">
+                                    <div class="custom-entry-header">
+                                        <h3>${entry.title}</h3>
+                                        ${entry.date ? `<span class="entry-date">${entry.date}</span>` : ''}
+                                    </div>
+                                    ${entry.subtitle ? `<p class="entry-subtitle">${entry.subtitle}</p>` : ''}
+                                    ${entry.description ? `<p class="entry-description">${entry.description}</p>` : ''}
+                                </div>
+                            `).join('')}
+                        </section>
+                    `).join('') : ''}
                 </div>
             </div>
         `,
@@ -481,6 +511,22 @@ function getTemplate(templateName) {
                             ${data.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
                         </div>
                     </section>
+                    
+                    ${data.customSections && data.customSections.length > 0 ? data.customSections.map(section => `
+                        <section class="custom-section-content">
+                            <h2><i class="fas fa-list-alt"></i> ${section.title}</h2>
+                            ${section.entries.map(entry => `
+                                <div class="custom-entry-item">
+                                    <div class="experience-header">
+                                        <h3>${entry.title}</h3>
+                                        ${entry.subtitle ? `<span class="company">${entry.subtitle}</span>` : ''}
+                                    </div>
+                                    ${entry.date ? `<span class="duration">${entry.date}</span>` : ''}
+                                    ${entry.description ? `<p class="description">${entry.description}</p>` : ''}
+                                </div>
+                            `).join('')}
+                        </section>
+                    `).join('') : ''}
                 </div>
             </div>
         `,
@@ -998,7 +1044,79 @@ async function generateWordDocument(data) {
                                 })
                             ]
                         })
-                    ] : [])
+                    ] : []),
+                    
+                    // Custom Sections
+                    ...(data.customSections && data.customSections.length > 0 ? data.customSections.flatMap(section => [
+                        new Paragraph({
+                            text: section.title,
+                            heading: HeadingLevel.HEADING_2,
+                            spacing: {
+                                before: 400,
+                                after: 200,
+                            }
+                        }),
+                        ...section.entries.flatMap(entry => [
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: entry.title,
+                                        bold: true,
+                                        size: 28,
+                                    })
+                                ],
+                                spacing: {
+                                    before: 200,
+                                    after: 100,
+                                }
+                            }),
+                            ...(entry.subtitle ? [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: entry.subtitle,
+                                            bold: true,
+                                            size: 24,
+                                        }),
+                                        ...(entry.date ? [
+                                            new TextRun({
+                                                text: " | ",
+                                                size: 24,
+                                            }),
+                                            new TextRun({
+                                                text: entry.date,
+                                                size: 24,
+                                            })
+                                        ] : [])
+                                    ],
+                                    spacing: {
+                                        after: 100,
+                                    }
+                                })
+                            ] : []),
+                            ...(entry.date && !entry.subtitle ? [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: entry.date,
+                                            size: 24,
+                                        })
+                                    ],
+                                    spacing: {
+                                        after: 100,
+                                    }
+                                })
+                            ] : []),
+                            ...(entry.description ? [
+                                new Paragraph({
+                                    text: entry.description,
+                                    spacing: {
+                                        after: 200,
+                                    }
+                                })
+                            ] : [])
+                        ])
+                    ]) : [])
                 ]
             }]
         });
