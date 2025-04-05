@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Resume Import</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="linkedin-styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                Resume Builder
+            </div>
+            <div class="nav-links">
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="../index.html#templates"><i class="fas fa-paint-brush"></i> Templates</a>
+                <a href="../index.html#builder"><i class="fas fa-edit"></i> Builder</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="linkedin-hero">
+            <h1>Import Your LinkedIn Profile</h1>
+            <p>Create a professional resume automatically using your LinkedIn data</p>
+        </section>
+
+        <section class="linkedin-import">
+            <div class="import-container">
+                <div class="import-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Enter Your LinkedIn URL</h3>
+                            <p>Provide your public LinkedIn profile URL</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Review Data</h3>
+                            <p>Review and edit the imported information</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Generate Resume</h3>
+                            <p>Choose a template and download your resume</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1: URL Input Form -->
+                <div class="form-section" id="url-input-section">
+                    <h2>Enter Your LinkedIn Profile URL</h2>
+                    <form id="linkedin-url-form">
+                        <div class="form-group">
+                            <label for="linkedin-url">LinkedIn Profile URL</label>
+                            <input type="url" id="linkedin-url" placeholder="https://www.linkedin.com/in/yourprofile/" required>
+                            <p class="form-hint">Example: https://www.linkedin.com/in/johndoe/</p>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-button">
+                                <i class="fab fa-linkedin"></i> Import Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Data Review (Initially Hidden) -->
+                <div class="form-section hidden" id="data-review-section">
+                    <h2>Review Your Profile Data</h2>
+                    <form id="linkedin-data-form">
+                        <!-- Personal Information -->
+                        <div class="form-group">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="headline">Headline</label>
+                                    <input type="text" id="headline" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" id="phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" id="location" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="form-group">
+                            <h3><i class="fas fa-file-alt"></i> Summary</h3>
+                            <textarea id="summary" rows="4" required></textarea>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="form-group">
+                            <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                            <div id="experience-container">
+                                <!-- Experience entries will be added here -->
+                            </div>
+                            <button type="button" id="add-experience" class="secondary-button">
+                                <i class="fas fa-plus"></i> Add Experience
+                            </button>
+                        </div>
+
+                        <!-- Education -->
+                        <div class="form-group">
+                            <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                            <div id="education-container">
+                                <!-- Education entries will be added here -->
+                            </div>
+                            <button type="button" id="add-education" class="secondary-button">
+                                <i class="fas fa-plus"></i> Add Education
+                            </button>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="form-group">
+                            <h3><i class="fas fa-tools"></i> Skills</h3>
+                            <input type="text" id="skills" placeholder="Comma-separated skills" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="back-to-url" class="secondary-button">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="primary-button">
+                                <i class="fas fa-check"></i> Continue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Template Selection (Initially Hidden) -->
+                <div class="form-section hidden" id="template-selection-section">
+                    <h2>Choose a Template</h2>
+                    <div class="template-grid small">
+                        <div class="template-card" data-template="modern">
+                            <div class="template-preview">
+                                <img src="../templates/modern.png" alt="Modern Template">
+                            </div>
+                            <h3>Modern</h3>
+                        </div>
+                        <div class="template-card" data-template="professional">
+                            <div class="template-preview">
+                                <img src="../templates/professional.png" alt="Professional Template">
+                            </div>
+                            <h3>Professional</h3>
+                        </div>
+                        <div class="template-card" data-template="minimal">
+                            <div class="template-preview">
+                                <img src="../templates/minimal.png" alt="Minimal Template">
+                            </div>
+                            <h3>Minimal</h3>
+                        </div>
+                    </div>
+                    <div class="form-actions template-actions">
+                        <button type="button" id="back-to-review" class="secondary-button">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="button" id="generate-resume" class="primary-button">
+                            <i class="fas fa-file-word"></i> Generate Resume
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading Indicator (Initially Hidden) -->
+                <div class="loading-container hidden" id="loading-container">
+                    <div class="spinner"></div>
+                    <p>Fetching your LinkedIn data...</p>
+                </div>
+
+                <!-- Error Message (Initially Hidden) -->
+                <div class="error-container hidden" id="error-container">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Error Occurred</h3>
+                    <p id="error-message">Unable to fetch LinkedIn profile data. Please try again.</p>
+                    <button type="button" id="retry-button" class="secondary-button">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Resume Builder. All rights reserved by Team 4n4.</p>
+    </footer>
+
+    <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="linkedin-script.js"></script>
+</body>
+</html> 

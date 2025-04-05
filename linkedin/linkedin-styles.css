@@ -1,0 +1,221 @@
+/* LinkedIn Integration Styles */
+
+/* Hero Section */
+.linkedin-hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #0072b1, #00a0dc);
+    color: white;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
+.linkedin-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.linkedin-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Import Container */
+.import-container {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Steps Indicator */
+.import-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.import-steps::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    text-align: center;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    border: 2px solid #0a66c2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.step.active .step-number {
+    background-color: #0a66c2;
+    color: white;
+}
+
+.step-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.step-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Form Elements */
+.form-hint {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Template Grid with Smaller Cards */
+.template-grid.small {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.template-grid.small .template-card {
+    cursor: pointer;
+}
+
+.template-grid.small .template-card.selected {
+    border: 2px solid #0a66c2;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.2);
+}
+
+.template-grid.small .template-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #0a66c2;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Loading Spinner */
+.loading-container {
+    text-align: center;
+    padding: 3rem;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top-color: #0a66c2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error Container */
+.error-container {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid #f5c2c7;
+    background-color: rgba(255, 0, 0, 0.05);
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+
+.error-container i {
+    font-size: 3rem;
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+.error-container h3 {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+/* LinkedIn Button */
+.primary-button .fa-linkedin {
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .import-steps {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .import-steps::before {
+        display: none;
+    }
+
+    .step {
+        flex-direction: row;
+        text-align: left;
+        gap: 1rem;
+    }
+
+    .step-number {
+        margin-bottom: 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+} 
